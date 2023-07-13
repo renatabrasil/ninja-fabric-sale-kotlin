@@ -1,0 +1,25 @@
+version: '2.1'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    tty: true
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: NinjaFabricSaleDB
+      POSTGRES_USER: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - db:/var/lib/postgres
+#      - ./src/main/resources/db/v1_create_attendant_table.sql:/docker-entrypoint-initdb.d/v1_create_attendant_table.sql
+    networks:
+      - compose-network
+
+networks:
+  compose-network:
+    driver: bridge
+volumes:
+  db:
+    driver: local
