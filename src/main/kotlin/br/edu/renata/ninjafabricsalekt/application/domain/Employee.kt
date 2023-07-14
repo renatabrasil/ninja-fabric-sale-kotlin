@@ -13,6 +13,7 @@ data class Employee(
 
 ) {
     fun toEntity() = EmployeeEntity(
+        id = id,
         name = name,
         office = office,
         admissionDate = admissionDate,
