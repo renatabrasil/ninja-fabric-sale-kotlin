@@ -10,7 +10,8 @@ name: Kotlin CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
     types: [ opened, synchronize, reopened ]
 
