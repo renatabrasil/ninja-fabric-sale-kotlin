@@ -10,7 +10,7 @@ name: Kotlin CI with Maven
 
 on:
   push:
-    branches: [ "feature/*" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "feature/*" ]
     types: [ opened, synchronize, reopened ]
@@ -41,5 +41,8 @@ jobs:
       - name: Stop containers
         if: always()
         run: docker-compose down
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+#      - name: Create Pull Request
+#        uses: peter-evans/create-pull-request@v5
+#        with:
+#          token: wd
+#          title: 'PR created automatically from'
