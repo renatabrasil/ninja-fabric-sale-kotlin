@@ -1,6 +1,6 @@
 package br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.entities
 
-import br.edu.renata.ninjafabricsalekt.application.domain.Employee
+import br.edu.renata.ninjafabricsalekt.application.domain.management.Employee
 import java.time.ZonedDateTime
 import java.util.*
 import javax.persistence.*
