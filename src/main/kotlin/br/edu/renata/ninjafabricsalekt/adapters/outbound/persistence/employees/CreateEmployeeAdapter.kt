@@ -1,8 +1,7 @@
 package br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.employees
 
-import br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.entities.EmployeeEntity
 import br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.repositories.EmployeeRepository
-import br.edu.renata.ninjafabricsalekt.application.domain.Employee
+import br.edu.renata.ninjafabricsalekt.application.domain.management.Employee
 import br.edu.renata.ninjafabricsalekt.application.ports.outbound.CreateEmployeePort
 import org.springframework.stereotype.Component
 
