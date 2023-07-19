@@ -1,10 +1,10 @@
 package br.edu.renata.ninjafabricsalekt.application.services.employees
 
-import br.edu.renata.ninjafabricsalekt.application.ports.inbound.employees.GetEmployeesUseCase
-import br.edu.renata.ninjafabricsalekt.application.ports.outbound.GetEmployeesPort
+import br.edu.renata.ninjafabricsalekt.application.repositories.EmployeeRepository
+import br.edu.renata.ninjafabricsalekt.application.usecases.employees.GetEmployeesUseCase
 import org.springframework.stereotype.Service
 
 @Service
-class GetEmployeesService(private val getEmployeesPort: GetEmployeesPort) : GetEmployeesUseCase {
-    override fun execute() = getEmployeesPort.findAll()
+class GetEmployeesService(private val employeeRepository: EmployeeRepository) : GetEmployeesUseCase {
+    override fun execute() = employeeRepository.findAll().toList()
 }

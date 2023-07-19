@@ -1,13 +1,13 @@
 package br.edu.renata.ninjafabricsalekt.application.services.employees
 
-import br.edu.renata.ninjafabricsalekt.application.domain.management.Employee
-import br.edu.renata.ninjafabricsalekt.application.ports.inbound.employees.GetEmployeeByIdUseCase
-import br.edu.renata.ninjafabricsalekt.application.ports.outbound.GetEmployeeByIdPort
+import br.edu.renata.ninjafabricsalekt.application.models.Employee
+import br.edu.renata.ninjafabricsalekt.application.repositories.EmployeeRepository
+import br.edu.renata.ninjafabricsalekt.application.usecases.employees.GetEmployeeByIdUseCase
 import org.springframework.stereotype.Service
 
 @Service
-class GetEmployeeByIdService(private val getEmployeeByIdPort: GetEmployeeByIdPort) : GetEmployeeByIdUseCase {
+class GetEmployeeByIdService(private val employeeRepository: EmployeeRepository) : GetEmployeeByIdUseCase {
     override fun execute(id: String): Employee {
-        return getEmployeeByIdPort.findById(id)
+        return employeeRepository.findById(id).get()
     }
 }

@@ -1,11 +1,13 @@
 package br.edu.renata.ninjafabricsalekt.application.services.orders
 
-import br.edu.renata.ninjafabricsalekt.application.domain.inventory.Product
-import br.edu.renata.ninjafabricsalekt.application.domain.orders.Order
-import br.edu.renata.ninjafabricsalekt.application.ports.inbound.inventory.FindProductsInInventoryUseCase
-import br.edu.renata.ninjafabricsalekt.application.ports.inbound.orders.CreateOrderUseCase
-import br.edu.renata.ninjafabricsalekt.application.ports.inbound.payment.FindOpenedPaymentOrderByCustomerUseCase
+import br.edu.renata.ninjafabricsalekt.application.models.Product
+import br.edu.renata.ninjafabricsalekt.application.models.Order
+import br.edu.renata.ninjafabricsalekt.application.usecases.inventory.FindProductsInInventoryUseCase
+import br.edu.renata.ninjafabricsalekt.application.usecases.orders.CreateOrderUseCase
+import br.edu.renata.ninjafabricsalekt.application.usecases.payment.FindOpenedPaymentOrderByCustomerUseCase
+import org.springframework.stereotype.Service
 
+@Service
 class CreateOrderService(
     private val findOpenedPaymentOrderByCustomerUseCase: FindOpenedPaymentOrderByCustomerUseCase,
     private val findProductsInInventoryUseCase: FindProductsInInventoryUseCase
