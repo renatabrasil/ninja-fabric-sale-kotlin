@@ -1,40 +1,34 @@
 package br.edu.renata.ninjafabricsalekt.application.services.orders
 
-import br.edu.renata.ninjafabricsalekt.application.models.Product
 import br.edu.renata.ninjafabricsalekt.application.models.Order
-import br.edu.renata.ninjafabricsalekt.application.usecases.inventory.FindProductsInInventoryUseCase
+import br.edu.renata.ninjafabricsalekt.application.repositories.OrderRepository
+import br.edu.renata.ninjafabricsalekt.application.usecases.inventory.CheckProductsInStockUseCase
 import br.edu.renata.ninjafabricsalekt.application.usecases.orders.CreateOrderUseCase
-import br.edu.renata.ninjafabricsalekt.application.usecases.payment.FindOpenedPaymentOrderByCustomerUseCase
+import br.edu.renata.ninjafabricsalekt.application.usecases.payment.ValidateCustomerCreditUseCase
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class CreateOrderService(
-    private val findOpenedPaymentOrderByCustomerUseCase: FindOpenedPaymentOrderByCustomerUseCase,
-    private val findProductsInInventoryUseCase: FindProductsInInventoryUseCase
+    private val validateCustomerCreditUseCase: ValidateCustomerCreditUseCase,
+    private val checkProductsInStockUseCase: CheckProductsInStockUseCase,
+    private val orderRepository: OrderRepository
 ) :
     CreateOrderUseCase {
+
+    @Transactional
     override fun execute(creationOrderRequest: Order) {
-        TODO("Not yet implemented")
         // Englobar tudo num contexto transacional
-        // 1 - Validate payment (verifica se tem pagamento em aberto) - Status -> CONFIRMED
-        if (findOpenedPaymentOrderByCustomerUseCase.execute(creationOrderRequest.customer.id).isNotEmpty()) {
-            // Throws exception
-        }
-        // 2 - Validate product stocks (verifica quais produtos estão no estoque) - remove out of stock products - Status -> IN_PROGRESS
-        val availableProductItems = mutableListOf<Order.ProductItem>()
-        for (item in creationOrderRequest.productItems) {
-            val product: Product = findProductsInInventoryUseCase.execute(item.fabric).get(0)
-            if (product.quantity > 0) {
-                if (item.quantity <= product.quantity) {
-                    availableProductItems.add(item)
-                } else {
-                    availableProductItems.add(item.copy(quantity = product.quantity))
-                }
+        creationOrderRequest.takeIf { validateCustomerCreditUseCase.execute(customerId = creationOrderRequest.customer.id) }
+            ?.run {
+                productItems = checkProductsInStockUseCase.execute(productItems)
+                orderRepository.save(this)
             }
-            // Remove items from inventory (if the rest of steps fails, return items to inventory
-        }
+
         // 3 - When received Status READY from Shipping module Status -> IN_DELIVERING
-        // 4 - When period setted by shipping module expires - Status -> FINISHED
+        // 4 - When period set by shipping module expires - Status -> FINISHED
+
 
     }
+
 }
