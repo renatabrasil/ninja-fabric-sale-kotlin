@@ -20,7 +20,7 @@ class CreateOrderServiceTest {
         CreateOrderService(validateCustomerCreditUseCase, checkProductsInStockUseCase, orderRepository)
 
     @Test
-    fun `Verify creation of order with customer valid and products in stock sucessfully`() {
+    fun `Verify creation of order with customer valid and products in stock successfully`() {
         // Given
         val createOrderRequest = getCreateOrderRequest()
         val productItemsInStock = emptyList<Order.ProductItem>()

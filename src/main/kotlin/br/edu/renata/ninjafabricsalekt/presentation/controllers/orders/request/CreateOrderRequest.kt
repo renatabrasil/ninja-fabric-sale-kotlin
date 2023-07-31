@@ -16,10 +16,10 @@ data class CreateOrderRequest(
         productItems = productItems,
         customer = customer,
         seller = seller,
-        shippingModality = shippingModality,
-        cashPaymentType = cashPaymentType,
+        shippingModality = shippingModality.name,
+        cashPaymentType = cashPaymentType.name,
         observation = observation,
-        status = Order.Status.CREATED
+        status = Order.Status.CREATED.name
     )
 
 }

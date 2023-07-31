@@ -19,11 +19,12 @@ class CreateOrderService(
     @Transactional
     override fun execute(creationOrderRequest: Order) {
         // Englobar tudo num contexto transacional
-        creationOrderRequest.takeIf { validateCustomerCreditUseCase.execute(customerId = creationOrderRequest.customer.id) }
-            ?.run {
-                productItems = checkProductsInStockUseCase.execute(productItems)
-                orderRepository.save(this)
-            }
+        creationOrderRequest.takeIf {
+            validateCustomerCreditUseCase.execute(customerId = creationOrderRequest.customer.id)
+        }?.run {
+            productItems = checkProductsInStockUseCase.execute(productItems)
+            orderRepository.save(this)
+        }
 
         // 3 - When received Status READY from Shipping module Status -> IN_DELIVERING
         // 4 - When period set by shipping module expires - Status -> FINISHED

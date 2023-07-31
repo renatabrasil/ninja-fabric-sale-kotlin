@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
 @DataJpaTest
 @Tag(value = "integration")
-internal class OrderRepositoryTest {
+internal class OrderRepositoryIntegrationTest {
     @Autowired
     private lateinit var orderRepository: OrderRepository
 

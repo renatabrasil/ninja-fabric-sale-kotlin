@@ -14,31 +14,35 @@ data class Order(
     @Transient
     var productItems: List<ProductItem>,
 
-    @OneToOne(cascade = [CascadeType.ALL])
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     val customer: Customer,
-    var status: Status,
+
+    var status: String,
+
     @Column(name = "seller")
     val seller: String,
 
-    @Transient
     @Column(name = "shipping_modality")
-    val shippingModality: ShippingModality,
+    val shippingModality: String,
 
-    @Transient
     @Column(name = "cash_payment_type")
-    val cashPaymentType: PaymentType,
+    val cashPaymentType: String,
 
     val observation: String = "",
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     val createdAt: ZonedDateTime? = null,
+
     @Column(name = "updated_at")
     @UpdateTimestamp
     val updatedAt: ZonedDateTime? = null
+
 ) {
     data class ProductItem(
         val fabric: Fabric,
-        val color: Color,
+        val color: String,
         val unitPrice: BigDecimal,
         val quantity: Int,
         val unitMeasurement: UnitMeasurement
@@ -73,7 +77,7 @@ data class Order(
     }
 
     fun updateStatus(status: Order.Status) {
-        this.status = status
+        this.status = status.name
 
     }
 
