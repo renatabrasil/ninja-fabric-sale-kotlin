@@ -18,7 +18,7 @@ class CheckProductsInStockService(
         // 2 - Validate product stocks (verifica quais produtos estão no estoque) - remove out of stock products - Status -> IN_PROGRESS
         val availableProductItems = mutableListOf<Order.ProductItem>()
         for (item in productItems) {
-            repository.findByFabric_NameAndColor(item.fabric.name, item.color)
+            repository.findByProductItemParams(fabricName = item.fabric.name, color = item.color, packaging = "item.unitPrice")
             val product: Product = findProductsInInventoryUseCase.execute(item.fabric).get(0)
             if (product.quantity > 0) {
                 if (item.quantity <= product.quantity) {

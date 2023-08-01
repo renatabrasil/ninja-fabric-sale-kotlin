@@ -14,7 +14,7 @@ data class Order(
     @Transient
     var productItems: List<ProductItem>,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     val customer: Customer,
 

@@ -9,7 +9,7 @@ import java.util.*
 
 fun getCreateOrderRequest(
     productItems: List<Order.ProductItem> = emptyList(),
-    customer: Customer = EasyRandom().nextObject(Customer::class.java),
+    customer: Customer = dummyObject(),
     seller: String = "Joãozinho Trinta",
     shippingModality: Order.ShippingModality = Order.ShippingModality.CIF,
     cashPaymentType: Order.PaymentType = Order.PaymentType.IN_CASH,
@@ -27,7 +27,7 @@ fun getCreateOrderRequest(
 fun dummyPaymentOrder(
     id: String = UUID.randomUUID().toString(),
     status: String = "OPENED",
-    customer: Customer = EasyRandom().nextObject(Customer::class.java).copy(id = UUID.randomUUID().toString()),
+    customer: Customer = dummyObject<Customer>().copy(id = UUID.randomUUID().toString()),
     order: Order = getDummyOrder()
 ) = PaymentOrder(
     id = id,
@@ -44,7 +44,7 @@ fun getDummyOrder(
     observation: String = "",
     shippingModality: Order.ShippingModality = Order.ShippingModality.CIF,
     cashPaymentType: Order.PaymentType = Order.PaymentType.IN_CASH,
-    customer: Customer = EasyRandom().nextObject(Customer::class.java).copy(id = UUID.randomUUID().toString())
+    customer: Customer = dummyObject<Customer>().copy(id = UUID.randomUUID().toString())
 ) =
     Order(
         id = id,
@@ -60,13 +60,14 @@ fun getDummyOrder(
     )
 
 fun getDummyItem(
-    fabric: Fabric = EasyRandom().nextObject(Fabric::class.java),
+    fabric: Fabric = dummyObject(),
     quantity: Int = 3,
     color: String = Color.RED.name,
     status: String = InventoryItem.Status.STOCK.name,
     packaging: String = "ROLL",
     unitPrice: BigDecimal = BigDecimal(10.4),
-    size: Int = 30
+    size: Int = 30,
+    updatedAt: ZonedDateTime? = null
 ) = InventoryItem(
     fabric = fabric,
     quantity = quantity,
@@ -74,5 +75,10 @@ fun getDummyItem(
     status = status,
     packaging = packaging,
     unitPrice = unitPrice,
-    size = size
+    size = size,
+    updatedAt = updatedAt
 )
+
+inline fun <reified T> dummyObject(): T {
+    return EasyRandom().nextObject(T::class.java)
+}

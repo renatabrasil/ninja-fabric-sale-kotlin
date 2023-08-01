@@ -3,13 +3,13 @@ package br.edu.renata.ninjafabricsalekt.application.repositories
 import br.edu.renata.ninjafabricsalekt.application.models.Color
 import br.edu.renata.ninjafabricsalekt.application.models.Fabric
 import br.edu.renata.ninjafabricsalekt.application.models.InventoryItem
+import br.edu.renata.ninjafabricsalekt.helpers.dummyObject
 import br.edu.renata.ninjafabricsalekt.helpers.getDummyItem
-import org.jeasy.random.EasyRandom
-import org.junit.Assert.assertArrayEquals
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import java.util.*
 
 @DataJpaTest
 class InventoryIntegrationTest {
@@ -20,24 +20,30 @@ class InventoryIntegrationTest {
     @Test
     fun `Should return item given a fabric and color successfully`() {
         // Given
-        val fabric = EasyRandom().nextObject(Fabric::class.java).copy(name = "LINHO", description = "100% Linho")
-        val anotherFabric =
-            EasyRandom().nextObject(Fabric::class.java).copy(name = "ALGODAO", description = "100% Algodao")
+        val fabric =
+            dummyObject<Fabric>().copy(id = UUID.randomUUID().toString(), name = "LINHO", description = "100% Linho")
+        val redColor = Color.RED.name
+        val anotherFabric = dummyObject<Fabric>().copy(
+            id = UUID.randomUUID().toString(),
+            name = "ALGODAO",
+            description = "100% Algodao"
+        )
+        val expectedResponse = getDummyItem(color = redColor, fabric = fabric, packaging = InventoryItem.Packaging.ROLL.name)
         val items = listOf(
-            getDummyItem(color = Color.BLUE.name, fabric = fabric),
-            getDummyItem(color = Color.GREEN.name, fabric = fabric),
-            getDummyItem(color = Color.RED.name, fabric = anotherFabric),
-            getDummyItem(color = Color.RED.name, fabric = fabric)
+            getDummyItem(color = Color.BLUE.name, fabric = fabric, packaging = InventoryItem.Packaging.ROLL.name),
+            expectedResponse,
+            getDummyItem(color = redColor, fabric = anotherFabric, packaging = InventoryItem.Packaging.ROLL.name),
+            getDummyItem(color = redColor, fabric = fabric, packaging = InventoryItem.Packaging.DETACHED.name)
         )
         inventoryRepository.saveAll(
             items
         )
-        val expectedResponse = items.filter { it.fabric.name == fabric.name && it.color == Color.RED.name }
 
         // When
-        val response = inventoryRepository.findByFabric_NameAndColor(fabric.name, Color.RED.name)
+        val response =
+            inventoryRepository.findByProductItemParams(fabricName = fabric.name, color = redColor, packaging = "ROLL")
 
         // Then
-        assertEquals(expectedResponse, response)
+        assertEquals(expectedResponse.id, response.get(0).id)
     }
 }
