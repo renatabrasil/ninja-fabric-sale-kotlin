@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @EnableJpaRepositories
 class NinjaFabricSaleKtApplication
 
+
 fun main(args: Array<String>) {
 	runApplication<NinjaFabricSaleKtApplication>(*args)
 }
