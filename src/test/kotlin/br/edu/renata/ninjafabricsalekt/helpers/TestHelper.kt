@@ -60,22 +60,14 @@ fun getDummyOrder(
     )
 
 fun getDummyItem(
-    fabric: Fabric = dummyObject(),
+    product: Product = dummyObject(),
     quantity: Int = 3,
-    color: String = Color.RED.name,
     status: String = InventoryItem.Status.STOCK.name,
-    packaging: String = "ROLL",
-    unitPrice: BigDecimal = BigDecimal(10.4),
-    size: Int = 30,
     updatedAt: ZonedDateTime? = null
 ) = InventoryItem(
-    fabric = fabric,
+    product = product,
     quantity = quantity,
-    color = color,
     status = status,
-    packaging = packaging,
-    unitPrice = unitPrice,
-    size = size,
     updatedAt = updatedAt
 )
 

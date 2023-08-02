@@ -2,7 +2,6 @@ package br.edu.renata.ninjafabricsalekt.application.models
 
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
 import javax.persistence.*
@@ -41,12 +40,13 @@ data class Order(
 
 ) {
     data class ProductItem(
-        val fabric: Fabric,
-        val color: String,
-        val unitPrice: BigDecimal,
+        val product: Product,
         val quantity: Int,
         val unitMeasurement: UnitMeasurement
-    )
+    ) {
+
+
+    }
 
     enum class UnitMeasurement {
         METER,

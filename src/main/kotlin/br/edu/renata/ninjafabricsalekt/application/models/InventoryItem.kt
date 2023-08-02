@@ -1,8 +1,7 @@
 package br.edu.renata.ninjafabricsalekt.application.models
 
-import br.edu.renata.ninjafabricsalekt.application.utils.ColorConverter
+import br.edu.renata.ninjafabricsalekt.application.usecases.exceptions.BusinessException
 import org.hibernate.annotations.UpdateTimestamp
-import java.math.BigDecimal
 import java.time.ZonedDateTime
 import java.util.*
 import javax.persistence.*
@@ -13,20 +12,10 @@ data class InventoryItem(
     val id: String? = UUID.randomUUID().toString(),
 
     @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
-    @JoinColumn(name = "fabric_id")
-    val fabric: Fabric,
-
-//    @Convert(converter = ColorConverter::class)
-    val color: String,
-
-    val packaging: String,
-
-    val size: Int,
+    @JoinColumn(name = "product_id")
+    val product: Product,
 
     val quantity: Int,
-
-    @Column(name = "unit_price")
-    val unitPrice: BigDecimal,
 
     val status: String,
 
@@ -38,6 +27,31 @@ data class InventoryItem(
     val updatedAt: ZonedDateTime? = null
 
 ) {
+    fun hasStock() = quantity > 0
+
+    fun removeQuantityFromStock(item: Order.ProductItem): InventoryItem {
+
+        if (quantity == 0) {
+            throw BusinessException("Product: ${this.product.fabric} is OUT OF STOCK")
+        }
+
+        val residualQuantity = if (quantity < item.quantity) {
+            quantity.mod(item.quantity)
+        } else {
+            quantity - item.quantity
+        }
+
+        val status = if (residualQuantity == 0) {
+            Status.OUT_OF_STOCK.name
+        } else {
+            status
+        }
+        return this.copy(quantity = residualQuantity, status = status)
+    }
+
+
+    fun isInStock(item: Order.ProductItem) = item.quantity <= this.quantity
+
     enum class Packaging {
         ROLL,
         DETACHED

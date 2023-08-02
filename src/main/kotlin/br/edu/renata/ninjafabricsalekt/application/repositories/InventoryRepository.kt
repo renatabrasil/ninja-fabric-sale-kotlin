@@ -20,4 +20,8 @@ interface InventoryRepository : JpaRepository<InventoryItem, String> {
         @Param("fabricName") fabricName: String,
         @Param("packaging") packaging: String
     ): List<InventoryItem>
+
+    fun findByProductId(productId: String): List<InventoryItem>
+
+
 }
