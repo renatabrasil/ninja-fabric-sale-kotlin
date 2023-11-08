@@ -1,3 +1,6 @@
+import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.test.context.junit.jupiter.SpringExtension
+
 //package br.edu.renata.ninjafabricsalekt.application.services.integration_tests
 //
 //import br.edu.renata.ninjafabricsalekt.application.repositories.OrderRepository
