@@ -5,6 +5,8 @@ class AccountValidator: InstanceValidator {
 
         print("executa validação")
 
-        TODO("Not yet implemented")
+        return true
+
+//        TODO("Not yet implemented")
     }
 }

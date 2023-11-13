@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.primaryConstructor
 
 
 @SpringBootApplication
@@ -45,13 +47,11 @@ annotation class ContextValidator(val validator: KClass<out InstanceValidator> =
 @Component
 class ExampleAspect {
 
-    @Before("@annotation(ContextValidator)")
-    fun validate(joinPoint: JoinPoint) {
-        val validator = (joinPoint.target.javaClass.getMethod(joinPoint.signature.name)
-            .run { this.getAnnotation(ContextValidator::class.java) }).validator.java.getDeclaredConstructor().newInstance()
+    @Before("@annotation(contextValidator)")
+    fun validate(contextValidator: ContextValidator) {
 
-        val executor = (validator as AccountValidator).validate()
-
+        contextValidator.validator.primaryConstructor!!.call().validate()
+//        contextValidator.validator.createInstance().validate()
 
         print("sdsd")
     }

@@ -14,8 +14,9 @@
     <name>ninja-fabric-sale-kt</name>
     <description>Demo project for Spring Boot</description>
     <properties>
+        <mockkVersion>1.9.3</mockkVersion>
         <java.version>11</java.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.20</kotlin.version>
         <sonar.organization>renatabrasil</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 <!--        <sonar.jacoco.reportPaths></sonar.jacoco.reportPaths>-->
@@ -67,6 +68,13 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>${mockkVersion}</version>
             <scope>test</scope>
         </dependency>
 
