@@ -63,17 +63,11 @@ class ExampleAspect {
 
         val teste = context?.getBean("getEmployeeByIdService") as GetEmployeeByIdService
 
-//        val attributes = mutableListOf<Any>()
+        // Pegar a lista de parametros do validador
+        val parameters = kClass.memberProperties.map { context.getBean(it.name) }
 
-//        val list = kClass.memberProperties.map { context.getBean(it.name) }
-//
-//        kClass.memberProperties.forEach { println(it.name) }
-
-        contextValidator.validator.primaryConstructor!!.call(teste)
-            .validate()
-//        contextValidator.validator.createInstance().validate()
-
-        print("sdsd")
+        // *list.toTypedArray converte em varargs
+        contextValidator.validator.primaryConstructor!!.call(*parameters.toTypedArray()).validate()
     }
 
     @Before("@annotation(TestMe)")

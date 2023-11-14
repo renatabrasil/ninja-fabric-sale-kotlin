@@ -7,6 +7,8 @@ class AccountValidator(
 ): InstanceValidator {
     override fun validate(): Boolean {
 
+        println("INICIANDO VALIDACAO")
+
         println(getEmployeeByIdService.execute("1"))
 
         print("executa validação")
