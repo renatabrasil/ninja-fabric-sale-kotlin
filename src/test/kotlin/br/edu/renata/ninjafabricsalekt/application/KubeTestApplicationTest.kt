@@ -15,13 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 class KubeTestApplicationTest {
     private val kubeTest = ExampleAspect()
 
-    @Test
-    fun `Testes`() {
-        val response = kubeTest.validate(captorAnnotation.captured)
 
-        println("oi")
-
-    }
 
 //    @Test
 //    fun `Should test annotation test`(){

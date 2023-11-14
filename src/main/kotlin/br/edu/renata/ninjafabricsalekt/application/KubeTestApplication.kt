@@ -1,16 +1,19 @@
 package br.edu.renata.ninjafabricsalekt.application
 
+import br.edu.renata.ninjafabricsalekt.application.services.employees.GetEmployeeByIdService
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 import kotlin.reflect.KClass
-import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.memberProperties
 import kotlin.reflect.full.primaryConstructor
 
 
@@ -47,10 +50,27 @@ annotation class ContextValidator(val validator: KClass<out InstanceValidator> =
 @Component
 class ExampleAspect {
 
+    @Autowired
+    private val context: ApplicationContext? = null
+
     @Before("@annotation(contextValidator)")
     fun validate(contextValidator: ContextValidator) {
 
-        contextValidator.validator.primaryConstructor!!.call().validate()
+
+        val kClass = contextValidator.validator
+        println(kClass.simpleName)
+        kClass.memberProperties.forEach { println(it.returnType) }
+
+        val teste = context?.getBean("getEmployeeByIdService") as GetEmployeeByIdService
+
+//        val attributes = mutableListOf<Any>()
+
+//        val list = kClass.memberProperties.map { context.getBean(it.name) }
+//
+//        kClass.memberProperties.forEach { println(it.name) }
+
+        contextValidator.validator.primaryConstructor!!.call(teste)
+            .validate()
 //        contextValidator.validator.createInstance().validate()
 
         print("sdsd")
