@@ -1,6 +1,5 @@
 package br.edu.renata.ninjafabricsalekt.application
 
-import br.edu.renata.ninjafabricsalekt.application.services.employees.GetEmployeeByIdService
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
@@ -30,7 +29,7 @@ class HelloWorldController {
 
     @GetMapping("/hello")
 //    @TestMe(roles = ["ppp","qqq"])
-    @ContextValidator
+    @ContextValidator(validator = CustomerValidator::class)
     fun helloWorld(): String {
         return "Hello World from Kube Kotlin ${Date()}()"
     }
@@ -56,18 +55,20 @@ class ExampleAspect {
     @Before("@annotation(contextValidator)")
     fun validate(contextValidator: ContextValidator) {
 
+        try {
+            with(contextValidator.validator) {
+                // Pegar a lista de parametros do validador
+                val parameters = this.memberProperties.map {
+                    context?.getBean(it.name)
+                }
+                // *parameters converte em varargs
+                this.primaryConstructor!!.call(*parameters.toTypedArray())
+            }.validate().also { println("Deu certo") }
 
-        val kClass = contextValidator.validator
-        println(kClass.simpleName)
-        kClass.memberProperties.forEach { println(it.returnType) }
+        } catch (e: Exception) {
+            throw e
+        }
 
-        val teste = context?.getBean("getEmployeeByIdService") as GetEmployeeByIdService
-
-        // Pegar a lista de parametros do validador
-        val parameters = kClass.memberProperties.map { context.getBean(it.name) }
-
-        // *list.toTypedArray converte em varargs
-        contextValidator.validator.primaryConstructor!!.call(*parameters.toTypedArray()).validate()
     }
 
     @Before("@annotation(TestMe)")

@@ -5,9 +5,11 @@ import br.edu.renata.ninjafabricsalekt.application.usecases.payment.FindOpenedPa
 import org.springframework.stereotype.Service
 
 @Service
-class FindOpenedPaymentOrderByCustomerService: FindOpenedPaymentOrderByCustomerUseCase {
+class FindOpenedPaymentOrderByCustomerService(
+
+): FindOpenedPaymentOrderByCustomerUseCase {
     override fun execute(customerId: String): List<PaymentOrder> {
-        TODO("Not yet implemented")
+        return emptyList()
         // 1 - Busca ordens de pagamento com status = OPENED
     }
 }
