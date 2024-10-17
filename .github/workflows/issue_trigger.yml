@@ -14,7 +14,7 @@ jobs:
 
       - name: Verify issue title
         run: |
-          if [[ "${{ github.event.issue.title }}" == *"template"* ]]; then
+          if [[ "${{ github.event.issue.title }}" == *"Criação de API"* ]]; then
             echo "Creating template..."
             # Adicione aqui o código para criar o template
           else
