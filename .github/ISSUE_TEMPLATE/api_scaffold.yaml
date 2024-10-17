@@ -18,7 +18,20 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: version
+    id: method
+    attributes:
+      label: Método
+      description: What version of our software are you running?
+      options:
+        - GET
+        - POST
+        - PATH
+        - DELETE
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: repo
     attributes:
       label: Repositório
       description: What version of our software are you running?
@@ -42,7 +55,7 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: Tipo de
+      label: Criar branch para documentação
       description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com). 
       options:
         - label: I agree to follow this project's Code of Conduct
