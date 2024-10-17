@@ -36,11 +36,10 @@ body:
       label: Repositório
       description: What version of our software are you running?
       options:
-        - Selecionar repositório
         - iaas-attendance-accounts-api
         - iaas-attendance-customers-api
         - iaas-attendance-tickets-api
-      default: Selecionar repositório
+      default: 0
     validations:
       required: true
 #  - type: dropdown
