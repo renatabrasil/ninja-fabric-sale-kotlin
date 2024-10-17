@@ -1,0 +1,22 @@
+name: Trigger on Issue Creation
+
+on:
+  issues:
+    types: [opened]  # Dispara quando uma nova issue for criada
+
+jobs:
+  create_template:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Verify issue title
+        run: |
+          if [[ "${{ github.event.issue.title }}" == *"template"* ]]; then
+            echo "Creating template..."
+            # Adicione aqui o código para criar o template
+          else
+            echo "No template creation needed."
+          fi
