@@ -2,7 +2,8 @@ name: Criação de API
 description: Use this template for tracking new features.
 title: "Criação de API"
 labels: scaffold
-assignees: ""
+assignees: 
+  - ""
 body:
   - type: markdown
     attributes:
