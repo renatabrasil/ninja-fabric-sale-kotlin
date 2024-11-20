@@ -1,6 +1,6 @@
-package br.edu.renata.ninjafabricsalekt.application.services
+package br.edu.renata.ninjafabricsalekt.application.services.employees
 
-import br.edu.renata.ninjafabricsalekt.application.domain.Employee
+import br.edu.renata.ninjafabricsalekt.application.domain.management.Employee
 import br.edu.renata.ninjafabricsalekt.application.ports.inbound.employees.GetEmployeeByIdUseCase
 import br.edu.renata.ninjafabricsalekt.application.ports.outbound.GetEmployeeByIdPort
 import org.springframework.stereotype.Service

@@ -1,4 +1,4 @@
-package br.edu.renata.ninjafabricsalekt.application.services
+package br.edu.renata.ninjafabricsalekt.application.services.employees
 
 import br.edu.renata.ninjafabricsalekt.adapters.inbound.web.employees.requests.CreateEmployeeRequest
 import br.edu.renata.ninjafabricsalekt.application.ports.inbound.employees.CreateEmployeeUseCase

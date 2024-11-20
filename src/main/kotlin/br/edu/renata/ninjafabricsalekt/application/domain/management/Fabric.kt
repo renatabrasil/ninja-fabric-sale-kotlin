@@ -1,4 +1,4 @@
-package br.edu.renata.ninjafabricsalekt.application.domain
+package br.edu.renata.ninjafabricsalekt.application.domain.management
 
 import br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.entities.FabricEntity
 import java.time.ZonedDateTime

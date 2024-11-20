@@ -1,6 +1,6 @@
 package br.edu.renata.ninjafabricsalekt.adapters.outbound.persistence.entities
 
-import br.edu.renata.ninjafabricsalekt.application.domain.Fabric
+import br.edu.renata.ninjafabricsalekt.application.domain.management.Fabric
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.ZonedDateTime
